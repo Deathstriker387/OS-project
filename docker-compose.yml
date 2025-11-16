@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  system-monitor:
+    build: .
+    container_name: system-monitor-api
+    ports:
+      - "5000:5000"
+    # Allow container to access host system metrics
+    pid: "host"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    environment:
+      - PROC_ROOT=/host/proc
+    restart: unless-stopped
